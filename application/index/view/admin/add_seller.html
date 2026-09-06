@@ -1,0 +1,33 @@
+{include file="common/header" title="$title" /}
+
+          <form role="form" action="{:url('add_seller_check')}" method="post">
+          <div class="form-group">
+            <label for="zh">联系电话：</label>
+            <input type="text" name="call" class="form-control" placeholder="联系电话">
+          </div>
+          <div class="form-group">
+            <label for="zh">店铺名称：</label>
+            <input type="text" name="sname" class="form-control" placeholder="店铺名称">
+          </div>
+          <div class="form-group">
+            <label for="mm">所属地区：</label>
+            <select class="form-control" name="saddress">
+                <option value='贝洛伯格'>贝洛伯格</option>
+                <option value='黑塔空间站'>黑塔空间站</option>
+                <option value='罗浮仙州'>罗浮仙州</option>
+              </select>
+              <div class="form-group">
+            <label for="mm">是否营业：</label>
+            <label class="radio-inline">
+              <input type="radio" name="business" value="1" checked> 是
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="business" value="0"> 否
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">提交</button>
+        </form>
+
+
+  {include file="common/footer" /}

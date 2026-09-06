@@ -1,0 +1,15 @@
+{include file="common/header" title="$title" /}
+
+<form role="form" action="{:url('del_customer_check')}" method="post">
+  <div class="form-group">
+    <label for="mm">订单编号：</label>
+    <select class="form-control" name="cno">
+      {volist name="customer" id="vo"}
+        <option value='{$vo.cno}'>{$vo.cno}.{$vo.name}</option>
+      {/volist}
+      </select>
+  </div>
+  <button type="submit" class="btn btn-danger btn-block">确认删除</button>
+</form>
+
+  {include file="common/footer" /}

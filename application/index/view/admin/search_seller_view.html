@@ -1,0 +1,24 @@
+{include file="common/header" title="$title" /}
+<table class="table table-bordered">
+    <tr class="info">
+      <td>联系电话</td>
+      <td>店铺名称</td>
+      <td>所属地址</td>
+      
+<th class="text-center">操作</th>
+    </tr>
+    {volist name="seller" id="vo"}
+    <tr>
+      <td>{$vo.call}</td>
+      <td>{$vo.sname}</td>
+      <td>{$vo.saddress}</td>
+
+<td><a title="删除" href="javascript:;" onclick="" class="btn btn-danger btn-xs " style="padding-top:2px ;padding-bottom:2px ;font-size:14px;width:50px;height:28px; color:red"><i class="Hui-iconfont"></i>删除</a>
+
+<a  class="btn btn-info waves-effect waves-light m-l-10"  href="" data-loader="true" data-title="权限设置" style="padding-top:2px !important;padding-bottom:2px !important;">编辑</a></td>
+
+
+    </tr>
+    {/volist}
+  </table>
+{include file="common/footer" /}

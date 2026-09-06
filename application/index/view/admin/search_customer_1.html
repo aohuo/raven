@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GGST - 角色图鉴</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e6e6e6;
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+        
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ff0000, #ff7700);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(to right, #ff7700, #ff0000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            color: #ffaa44;
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+        
+        .controls {
+            max-width: 1200px;
+            margin: 30px auto 20px;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .search-box {
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 8px 15px;
+            width: 100%;
+            max-width: 500px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 120, 0, 0.3);
+        }
+        
+        .search-box i {
+            color: #ff7700;
+            font-size: 20px;
+            margin-right: 10px;
+        }
+        
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 16px;
+            width: 100%;
+            outline: none;
+        }
+        
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .filter-btn {
+            background: rgba(255, 100, 0, 0.2);
+            color: #ffaa44;
+            border: 1px solid rgba(255, 120, 0, 0.4);
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: rgba(255, 100, 0, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .character-card {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 120, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(255, 80, 0, 0.3);
+            border-color: rgba(255, 120, 0, 0.5);
+        }
+        
+        .character-image {
+            height: 280px;
+            background: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff7700;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .character-image::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 100, 0, 0.1), rgba(150, 0, 0, 0.2));
+        }
+        
+        .character-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .character-name {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #ffaa44;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .character-type {
+            display: inline-block;
+            background: rgba(255, 100, 0, 0.3);
+            font-size: 0.8rem;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-weight: 500;
+        }
+        
+        .character-desc {
+            color: #b8b8b8;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .character-stats {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: auto;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ff7700;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #999;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .highlight {
+            color: #ff7700;
+        }
+        
+        @media (max-width: 768px) {
+            .character-card {
+                max-width: 350px;
+                margin: 0 auto;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .filters {
+                width: 100%;
+            }
+            
+            .filter-btn {
+                flex-grow: 1;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div class="logo">GG</div>
+            <div>
+                <h1>GUILTY GEAR -STRIVE-</h1>
+                <p class="subtitle">首发角色及第一季票角色图鉴</p>
+            </div>
+        </div>
+    </header>
+    
+    <div class="controls">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search" placeholder="搜索角色名称...">
+        </div>
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">全部角色</button>
+            <button class="filter-btn" data-filter="base">首发角色</button>
+            <button class="filter-btn" data-filter="season1">第一季票</button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="characters-grid">
+            <!-- 首发角色 -->
+            <div class="character-card" data-type="base">
+                <div class="character-image">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <div class="character-info">
+                    <h2 class="character-name">SOL BADGUY <span class="character-type">首发</span></h2>
+                    <p class="character-desc">原名为Frederick Bulsara，使用火焰与大型砍刀战斗的前任GEAR。性格暴躁，但内心深处有着强烈的正义感。一直在追捕他的宿敌That Man。</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <div class="stat-value">S</div>
+                            <div class="stat-label">攻击力</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">A</div>
+                            <div class="stat-label">速度</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">B</div>
+                            <div class="stat-label">防御</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="character-card" data-type="base">
+                <div class="character-image">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div class="character-info">
+                    <h2 class="character-name">KY KISKE <span class="character-type">首发</span></h2>
+                    <p class="character-desc">神圣王国伊卢亚德的骑士团长，使用闪电之剑Thunderseal。曾是Sol的对手，现在是值得信赖的盟友。性格正直严谨，追求正义与秩序。</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <div class="stat-value">A</div>
+                            <div class="stat-label">攻击力</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">A</div>
+                            <div class="stat-label">速度</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">A</div>
+                            <div class="stat-label">防御</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="character-card" data-type="base">
+                <div class="character-image">
+                    <i class="fas fa-anchor"></i>
+                </div>
+                <div class="character-info">
+                    <h2 class="character-name">MAY <span class="character-type">首发</span></h2>
+                    <p class="character-desc">海盗船Jellyfish号的甲板员，使用巨型船锚作为武器。性格活泼开朗，对船长Johnny怀有深深的爱慕之情。战斗风格充满活力。</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <div class="stat-value">A</div>
+                            <div class="stat-label">攻击力</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">B</div>
+                            <div class="stat-label">速度</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">B</div>
+                            <div class="stat-label">防御</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="character-card" data-type="base">
+                <div class="character-image">
+                    <i class="fas fa-hourglass-half"></i>
+                </div>
+                <div class="character-info">
+                    <h2 class="character-name">AXL LOW <span class="character-type">首发</span></h2>
+                    <p class="character-desc">来自20世纪英国的时空穿越者，使用锁链镰刀。性格随和幽默，希望能回到自己的时代。拥有操控时间的能力，可以减缓对手动作。</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <div class="stat-value">B</div>
+                            <div class="stat-label">攻击力</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">A</div>
+                            <div class="stat-label">速度</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">C</div>
+                            <div class="stat-label">防御</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="character-card" data-type="base">
+                <div class="character-image">
+                    <i class="fas fa-user-ninja"></i>
+                </div>
+                <div class="character-info">
+                    <h2 class="character-name">CHIPP ZANUFF <span class="character-type">首发</span></h2>
+                    <p class="character-desc">东方国家纳戈里亚的前总统，忍者大师。拥有超高速移动能力，使用忍者技巧和暗器战斗。致力于帮助他人并重建自己的国家。</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <div class="stat-value">A</div>
+                            <div class="stat-label">攻击力</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">S</div>
+                            <div class="stat-label">速度</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">D</div>
+                            <div class="stat-label">防御</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="character-card" data-type="base">
+                <div class="character-image">
+                    <i class="fas fa-fist-raised"></i>
+                </div>
+                <div class="character-info">
+                    <h2 class="character-name">POTEMKIN <span class="character-type">首发</span></h2>
+                    <p class="character-info">
+                    <p class="character-desc">泽普联邦的精英士兵，拥有巨大的身躯和力量。性格温和，厌恶暴力但为了保护他人而战。使用机械拳套和强大的投技。</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <div class="stat-value">S</div>
+                            <div class="stat-label">攻击力</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">D</div>
+                            <div class="stat-label">速度</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">S</div>
+                            <div class="stat-label">防御</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 第一季票角色 -->
+            <div class="character-card" data-type="season1">
+                <div class="character-image">
+                    <i class="fas fa-ghost"></i>
+                </div>
+                <div class="character-info">
+                    <h2 class="character-name">GOLDLEWIS DICKINSON <span class="character-type">季票1</span></h2>
+                    <p class="character-desc">美国国防部长，携带一个装满外星生物"Behemoth Typhoon"的棺材作为武器。保护美国免受超自然威胁，性格严肃认真。</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <div class="stat-value">S</div>
+                            <div class="stat-label">攻击力</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">C</div>
+                            <div class="stat-label">速度</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">A</div>
+                            <div class="stat-label">防御</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="character-card" data-type="season1">
+                <div class="character-image">
+                    <i class="fas fa-mask"></i>
+                </div>
+                <div class="character-info">
+                    <h2 class="character-name">JACK-O' <span class="character-type">季票1</span></h2>
+                    <p class="character-desc">由Aria创造的人造生命体，性格活泼顽皮。可以召唤仆从协助战斗，战斗风格独特而不可预测。</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <div class="stat-value">B</div>
+                            <div class="stat-label">攻击力</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">A</div>
+                            <div class="stat-label">速度</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">B</div>
+                            <div class="stat-label">防御</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="character-card" data-type="season1">
+                <div class="character-image">
+                    <i class="fas fa-dice"></i>
+                </div>
+                <div class="character-info">
+                    <h2 class="character-name">HAPPY CHAOS <span class="character-type">季票1</span></h2>
+                    <p class="character-desc">自称"原初之魔"的神秘存在，性格反复无常。使用手枪和魔法战斗，能力强大但难以预测。</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <div class="stat-value">A</div>
+                            <div class="stat-label">攻击力</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">A</div>
+                            <div class="stat-label">速度</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">C</div>
+                            <div class="stat-label">防御</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="character-card" data-type="season1">
+                <div class="character-image">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="character-info">
+                    <h2 class="character-name">BAIKEN <span class="character-type">季票1</span></h2>
+                    <p class="character-desc">独眼独臂的浪人武士，使用日本刀和陷阱战术。为复仇而活，性格坚韧不屈。战斗风格凶狠而精准。</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <div class="stat-value">A</div>
+                            <div class="stat-label">攻击力</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">B</div>
+                            <div class="stat-label">速度</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">B</div>
+                            <div class="stat-label">防御</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="character-card" data-type="season1">
+                <div class="character-image">
+                    <i class="fas fa-skull"></i>
+                </div>
+                <div class="character-info">
+                    <h2 class="character-name">TESTAMENT <span class="character-type">季票1</span></h2>
+                    <p class="character-desc">曾是GEAR，现在是独立存在的存在。使用巨大的镰刀和使魔战斗。性格冷静沉着，有着复杂的过去。</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <div class="stat-value">B</div>
+                            <div class="stat-label">攻击力</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">B</div>
+                            <div class="stat-label">速度</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">A</div>
+                            <div class="stat-label">防御</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>GUILTY GEAR -STRIVE- 首发及第一季票角色图鉴 | 数据更新至2023年</p>
+        <p>使用本地图片替换说明：下载角色图片后，将文件放入images文件夹，按角色名命名（如sol_badguy.jpg）</p>
+        <p>然后在代码中将 <span class="highlight">&lt;i class="fas fa-fire"&gt;&lt;/i&gt;</span> 替换为 <span class="highlight">&lt;img src="images/sol_badguy.jpg" alt="Sol Badguy"&gt;</span></p>
+    </footer>
+    
+    <script>
+        // 搜索和过滤功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const characterCards = document.querySelectorAll('.character-card');
+            
+            // 搜索功能
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                characterCards.forEach(card => {
+                    const name = card.querySelector('.character-name').textContent.toLowerCase();
+                    if (name.includes(searchTerm)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+            
+            // 过滤功能
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 更新活动按钮
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    characterCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-type') === filter) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // 添加卡片悬停效果增强
+            characterCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

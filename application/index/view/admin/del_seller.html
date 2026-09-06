@@ -1,0 +1,16 @@
+{include file="common/header" title="$title" /}
+
+          <form role="form" action="{:url('del_seller_check')}" method="post">
+            <div class="form-group">
+              <label for="mm">店铺信息：</label>
+              <select class="form-control" name="call">
+                {volist name="seller" id="vo"}
+                  <option value='{$vo.call}'>{$vo.call}.{$vo.sname}.{$vo.saddress}</option>
+                {/volist}
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-danger btn-block">确认删除</button>
+          </form>
+
+  {include file="common/footer" /}

@@ -1,0 +1,18 @@
+{include file="common/header" title="$title" /}
+<table class="table table-bordered">
+    <tr class="info">
+      <td>商品编号</td>
+      <td>联系电话</td>
+      <td>姓名</td>
+      <td>家庭住址</td>
+    </tr>
+    {volist name="customer" id="vo"}
+    <tr>
+      <td>{$vo.gno}</td>
+      <td>{$vo.cno}</td>
+      <td>{$vo.name}</td>
+      <td>{$vo.address}</td>
+    </tr>
+    {/volist}
+  </table>
+{include file="common/footer" /}

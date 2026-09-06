@@ -1,0 +1,31 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+
+# Generated runtime files
+/runtime/*
+!/runtime/.gitkeep
+*.log
+
+# Composer dependencies (the existing ThinkPHP source is versioned)
+/vendor/*
+!/vendor/.gitignore
+
+# Editor and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+
+# Local archives and backup exports
+*.zip
+*.bak
+*.sql.gz
+
+# Private design documents and local import notes
+/docs/design/
+/docs/IMPORT_NOTES.md

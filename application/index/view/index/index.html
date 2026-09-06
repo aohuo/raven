@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Chrome">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{$title}</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/main.css">
+    <link rel="stylesheet" href="/static/hui.css">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style type="text/tailwindcss">
+      [v-cloak]{
+        display: none;
+      }
+      
+      /* 添加背景图片样式 */
+      .background-image-container {
+        position: relative;
+        min-height: 100vh;
+      }
+      
+      .background-image-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('./img/1ST.jpg'); /* 背景图片路径*/
+        background-size: cover;
+        background-position: center;
+        opacity: 0.1;
+        z-index: -1; /* 置于内容后面 */
+      }
+    </style>
+  </head>
+
+  <body class="hui-background-color-white">
+    <!-- 将整个内容包裹在背景容器中 -->
+    <div class="background-image-container">
+      <div class="row" style="height: 50px"></div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-10" align="center">
+            <a href="{:url('login')}">
+              <img class="hui-circle hui-width-height-70" src="../../../../public/img/WELCOMEGGSt.jpg" width="90%" height="90%" alt="Tommy" />
+              <div class="row"><h1>点击进入登录页面</h1></div>
+            </a>
+          </div>
+          <div class="col-md-1"></div> 
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

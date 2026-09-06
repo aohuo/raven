@@ -1,0 +1,14 @@
+{include file="common/header" title="$title" /}
+      <form role="form" action="{:url('search_seller_view')}" method="post">
+          <div class="form-group">
+            <label for="mm">联系电话：</label>
+            <select class="form-control" name="call">
+              {volist name="seller" id="vo"}
+                <option value='{$vo.call}'>{$vo.call}.{$vo.sname}.{$vo.saddress}</option>
+              {/volist}>
+              </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">提交</button>
+        </form>
+  {include file="common/footer" /}

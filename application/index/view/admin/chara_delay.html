@@ -1,0 +1,15 @@
+{include file="common/header" title="$title" /}
+<table class="table table-bordered">
+    <tr class="info">
+        <td>角色名</td>
+        <td>所属季票</td>
+    </tr>
+    {volist name="chara_delay" id="vo"}
+    <tr>
+        <!-- 使用正确的字段名 chara_name -->
+        <td>{$vo.chara_name}</td>
+        <td>{$vo.season_pass}</td>
+    </tr>
+    {/volist}
+</table>
+{include file="common/footer" /}

@@ -1,0 +1,30 @@
+{include file="common/header" title="$title" /}
+<form role="form" action="{:url('admin/Admin/add_chara_check')}" method="post">
+    <div class="form-group">
+        <label for="name">角色名称：</label>
+        <input type="text" name="name" class="form-control" placeholder="角色全名" required>
+    </div>
+    <div class="form-group">
+        <label for="type">角色类型：</label>
+        <select name="type" class="form-control" required>
+            <option value="首发">首发角色</option>
+            <option value="季票1">第一季票角色</option>
+            <option value="季票2">第二季票角色</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="update_date">更新时间：</label>
+        <input type="date" name="update_date" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="business">是否可用：</label>
+        <label class="radio-inline">
+            <input type="radio" name="business" value="1" checked> 是
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="business" value="0"> 否
+        </label>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">提交</button>
+</form>
+{include file="common/footer" /}

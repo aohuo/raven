@@ -1,0 +1,21 @@
+{include file="common/header" title="$title" /}
+      <form role="form" action="{:url('update_customer_check')}" method="post">
+        <div class="form-group">
+          <label for="mm">订单编号：</label>
+          <select class="form-control" name="cno">
+            {volist name="customer" id="vo"}
+              <option value='{$vo.cno}'>{$vo.cno}.{$vo.name}</option>
+            {/volist}
+            </select>
+        </div>
+        <div class="form-group">
+          <label for="zh">订单支付状态：</label>
+           <label class="radio-inline">
+              <input type="radio" name="business" value="1" checked> 是
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="business" value="0"> 否
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">提交</button>
+      </form>
+  {include file="common/footer" /}
