@@ -1,0 +1,42 @@
+{include file="common/header" title="$title" /}
+<form role="form" action="{:url('update_chara_check')}" method="post">
+  <div class="form-group">
+    <label for="original_name">选择要修改的角色：</label>
+    <select id="original_name" class="form-control" name="original_name" required>
+      {volist name="characters" id="vo"}
+        <option value="{$vo.name}" data-name="{$vo.name}" data-season-pass="{$vo.season_pass}">{$vo.name}（季票 {$vo.season_pass}）</option>
+      {/volist}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="name">修改后的角色名称：</label>
+    <input id="name" type="text" name="name" class="form-control" placeholder="角色全名" maxlength="50" required>
+  </div>
+  <div class="form-group">
+    <label for="season_pass">所属季票：</label>
+    <select id="season_pass" name="season_pass" class="form-control" required>
+      <option value="0">首发角色</option>
+      <option value="1">第一季票角色</option>
+      <option value="2">第二季票角色</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary btn-block">提交修改</button>
+</form>
+<script>
+  (function () {
+    var selector = document.getElementById('original_name');
+    var nameInput = document.getElementById('name');
+    var seasonPassInput = document.getElementById('season_pass');
+
+    function fillCharacter() {
+      var option = selector.options[selector.selectedIndex];
+      if (!option) return;
+      nameInput.value = option.getAttribute('data-name');
+      seasonPassInput.value = option.getAttribute('data-season-pass');
+    }
+
+    selector.addEventListener('change', fillCharacter);
+    fillCharacter();
+  }());
+</script>
+{include file="common/footer" /}

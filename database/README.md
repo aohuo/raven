@@ -10,7 +10,7 @@
 | chara_update | 更新角色列表 |
 | chara_delay | 延迟更新角色列表 |
 | address | 旧系统地区数据 |
-| customer | 旧系统顾客数据 |
+| customer | 玩家资料（沿用旧表名） |
 | seller | 旧系统商家数据 |
 | goods | 旧系统商品数据 |
 | test | 原测试数据 |
@@ -31,4 +31,6 @@ SOURCE C:/path/to/repository/database/order.sql;
 
 导入后可执行 `SHOW TABLES;` 核对 10 张表。`up` 和 `player` 初始为空。现有网页注册写入的是 `up` 表，不是 `player` 表。
 
-原结构混用 MyISAM 与 InnoDB，只有 `player`、`test`、`up` 定义了主键，未定义外键。此次保留这些结构，不把设计问题隐藏在仓库导入中；业务修复与数据库迁移需要另行实施。
+角色和玩家资料的增删改查依赖 `character_name.name` 与 `customer.cno` 主键。仓库中的 `order.sql` 已包含这些修正；如果数据库是由旧版 SQL 创建的，请先备份，再执行 `migrations/001_fix_crud_schema.sql` 一次。该迁移不适合重复执行。
+
+数据库仍混用 MyISAM 与 InnoDB，且没有定义外键。这些结构问题不影响本次增删改查修复，后续可以通过单独迁移继续整理。

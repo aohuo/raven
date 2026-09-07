@@ -1,11 +1,11 @@
 {include file="common/header" title="$title" /}
 
-<form role="form" action="{:url('del_customer_check')}" method="post">
+<form role="form" action="{:url('del_chara_check')}" method="post">
   <div class="form-group">
     <label for="mm">角色名：</label>
     <select class="form-control" name="name">
-      {volist name="customer" id="vo"}
-        <option value='{$vo.name}'>{$vo.cno}.{$vo.name}</option>
+      {volist name="characters" id="vo"}
+        <option value="{$vo.name}">{$vo.name}（季票 {$vo.season_pass}）</option>
       {/volist}
       </select>
   </div>

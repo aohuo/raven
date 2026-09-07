@@ -1,0 +1,57 @@
+{include file="common/header" title="$title" /}
+<form role="form" action="{:url('update_player_check')}" method="post">
+  <div class="form-group">
+    <label for="cno">选择玩家：</label>
+    <select id="cno" class="form-control" name="cno" required>
+      {volist name="customers" id="vo"}
+        <option value="{$vo.cno}" data-name="{$vo.name}" data-address="{$vo.address}" data-gno="{$vo.gno}" data-buy="{$vo.buy}">{$vo.cno} - {$vo.name}</option>
+      {/volist}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="name">玩家名称：</label>
+    <input id="name" type="text" name="name" class="form-control" maxlength="50" required>
+  </div>
+  <div class="form-group">
+    <label for="address">地区：</label>
+    <input id="address" type="text" name="address" class="form-control" maxlength="100" required>
+  </div>
+  <div class="form-group">
+    <label for="gno">主力角色：</label>
+    <select id="gno" name="gno" class="form-control" required>
+      {volist name="characters" id="character"}
+        <option value="{$character.name}">{$character.name}</option>
+      {/volist}
+    </select>
+  </div>
+  <div class="form-group">
+    <label>活跃状态：</label>
+    <label class="radio-inline"><input type="radio" name="buy" value="1" checked> 活跃</label>
+    <label class="radio-inline"><input type="radio" name="buy" value="0"> 不活跃</label>
+  </div>
+  <button type="submit" class="btn btn-primary btn-block">提交修改</button>
+</form>
+<script>
+  (function () {
+    var selector = document.getElementById('cno');
+    var nameInput = document.getElementById('name');
+    var addressInput = document.getElementById('address');
+    var characterInput = document.getElementById('gno');
+
+    function fillPlayer() {
+      var option = selector.options[selector.selectedIndex];
+      if (!option) return;
+      nameInput.value = option.getAttribute('data-name');
+      addressInput.value = option.getAttribute('data-address');
+      characterInput.value = option.getAttribute('data-gno');
+
+      var buy = option.getAttribute('data-buy');
+      var radio = document.querySelector('input[name="buy"][value="' + buy + '"]');
+      if (radio) radio.checked = true;
+    }
+
+    selector.addEventListener('change', fillPlayer);
+    fillPlayer();
+  }());
+</script>
+{include file="common/footer" /}

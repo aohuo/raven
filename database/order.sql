@@ -50,8 +50,9 @@ INSERT INTO `address` (`address`) VALUES
 --
 
 CREATE TABLE `character_name` (
-  `name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
-  `season_pass` int(10) NOT NULL
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `season_pass` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -126,11 +127,12 @@ INSERT INTO `chara_update` (`chara_name`, `season_pass`) VALUES
 --
 
 CREATE TABLE `customer` (
-  `cno` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
-  `address` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `name` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
-  `gno` int(20) NOT NULL,
-  `buy` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+  `cno` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `gno` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `buy` tinyint(1) UNSIGNED NOT NULL DEFAULT '1',
+  PRIMARY KEY (`cno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -188,7 +190,8 @@ CREATE TABLE `seller` (
   `call` char(11) COLLATE utf8_unicode_ci NOT NULL,
   `saddress` char(50) COLLATE utf8_unicode_ci NOT NULL,
   `sname` char(30) COLLATE utf8_unicode_ci NOT NULL,
-  `business` int(10) NOT NULL
+  `business` int(10) NOT NULL,
+  PRIMARY KEY (`call`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --

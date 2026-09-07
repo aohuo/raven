@@ -1,26 +1,23 @@
 {include file="common/header" title="$title" /}
-<form role="form" action="{:url('add_customer_check')}" method="post">
+<form role="form" action="{:url('add_player_check')}" method="post">
     <div class="form-group">
         <label for="cno">玩家ID：</label>
-        <input type="text" name="cno" class="form-control" placeholder="玩家唯一ID">
+        <input type="text" name="cno" class="form-control" placeholder="玩家唯一ID" maxlength="32" required>
     </div>
     <div class="form-group">
         <label for="name">玩家名称：</label>
-        <input type="text" name="name" class="form-control" placeholder="玩家昵称">
+        <input type="text" name="name" class="form-control" placeholder="玩家昵称" maxlength="50" required>
     </div>
     <div class="form-group">
         <label for="address">地区：</label>
-        <input type="text" name="address" class="form-control" placeholder="所在地区">
+        <input type="text" name="address" class="form-control" placeholder="所在地区" maxlength="100" required>
     </div>
     <div class="form-group">
         <label for="gno">主力角色：</label>
-        <select name="gno" class="form-control">
-            <option value="SOL">SOL BADGUY</option>
-            <option value="KY">KY KISKE</option>
-            <option value="MAY">MAY</option>
-            <option value="AXL">AXL LOW</option>
-            <option value="CHIPP">CHIPP ZANUFF</option>
-            <option value="POTEMKIN">POTEMKIN</option>
+        <select name="gno" class="form-control" required>
+            {volist name="characters" id="character"}
+              <option value="{$character.name}">{$character.name}</option>
+            {/volist}
         </select>
     </div>
     <div class="form-group">

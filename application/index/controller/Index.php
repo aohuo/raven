@@ -1,7 +1,6 @@
 <?php
 namespace app\index\controller;
 use think\Controller;
-use think\Db;
 use app\index\model\Up;
 /*
 * ThinkPHP5入门请查看http://www.kancloud.cn/liuzhen153/tp5-demo
@@ -86,26 +85,4 @@ class Index extends Controller
     $status = Up::create($data);
     $status ? $this->success('恭喜您，注册成功！','login') : $this->error('注册失败，请重试！');
     }
-
-
-
-
-  public function add_seller_check()
-  {
-    $work = trim(input('work'));
-    $name = trim(input('name'));
-    if (empty($work) || empty($name)) {
-      $this->error('联系电话或姓名不能为空！');
-    }
-    $data = [
-      'call'     => $work,
-      'sname'   => $sname,
-      'saddress'    => input('saddress'),
-    
-    ];
-    $status = seller::create($data);
-    // dump($status);exit;
-    $status ? $this->success('恭喜您，添加成功！','order') : $this->error('添加失败，请重试！');
-  }    
-
 }

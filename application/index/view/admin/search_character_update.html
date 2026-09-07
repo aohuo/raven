@@ -1,12 +1,12 @@
 {include file="common/header" title="$title" /}
 <table class="table table-bordered">
     <tr class="info">
-        <td>角色ID</td>
+        <td>角色名</td>
         <td>季票</td>
     </tr>
     {volist name="chara_update" id="vo"}
     <tr>
-        <td>{$vo.character_id}</td>
+        <td>{$vo.chara_name}</td>
         <td>{$vo.season_pass}</td>
     </tr>
     {/volist}
